@@ -1,20 +1,27 @@
 <template>
   <div>
-    <vfd></vfd>
+    <FlowPanel></FlowPanel>
   </div>
 </template>
 
 <script>
-import vfd from "vfd";
+import FlowPanel from "../components/flow/panel";
 export default {
   components: {
-    vfd
+    FlowPanel
   },
   data() {
     return {};
   },
-  created() {}
+  created() {},
+  mounted() {}
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.workplace {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+</style>
