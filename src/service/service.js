@@ -8,12 +8,32 @@
  */
 import service from './requests/httpService'
 
+const perfix = "http://localhost:8002/services"
+
 const services = {
   // /group/upsert
   // 第一页 新建
   upset() {
-    return service.get('/group/upsert')
+    return service.post(perfix+'/group/upsert')
+  },
+  // /services/infoUnit/upsert
+  
+  infoUnitUpset() {
+    return service.post(perfix+'/infoUnit/upsert')
+  },
+
+  // /services/rules/upsert
+
+  rulesUpsert(){
+    return service.post(perfix+'/rules/upsert')
+  },
+
+  ///services/event/upsert
+
+  eventUpsert(){
+    return service.post(perfix+'/event/upsert')
   }
+
 }
 
 export default services

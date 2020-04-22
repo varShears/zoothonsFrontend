@@ -22,7 +22,7 @@ var dataC = {
     {
       id: 'nodeC',
       name: '流程C-节点C',
-      type: 'task',
+      type: 'end',
       left: '400px',
       top: '378px',
       ico: 'el-icon-finished',

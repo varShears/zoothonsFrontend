@@ -1,12 +1,18 @@
 <template>
   <div>
-    <FlowPanel></FlowPanel>
+    <FlowPanel :engineCode="engineCode"></FlowPanel>
   </div>
 </template>
 
 <script>
 import FlowPanel from "../components/flow/panel";
 export default {
+  props:{
+    engineCode:{
+      type:String,
+      default:''
+    }
+  },
   components: {
     FlowPanel
   },

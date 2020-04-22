@@ -29,13 +29,14 @@
 
     <div class="flow-node-text" :show-overflow-tooltip="true">{{node.name}}</div>
 
-    <div class="flow-node-right-ico" v-if="mouseEnter" @click="deleteNode">
+    <div class="flow-node-right-ico" v-if="mouseEnter" @click.stop="deleteNode">
       <i class="el-icon-delete"></i>
     </div>
   </div>
 </template>
 
 <script>
+import service from "../../service/service";
 export default {
   props: {
     node: Object
@@ -45,7 +46,10 @@ export default {
       // 控制节点操作显示
       mouseEnter: false,
       // eslint-disable-next-line no-undef
-      stateImg: require("@/assets/ok.png")
+      stateImg: require("@/assets/ok.png"),
+      dialogVisible: false,
+      chain:[],
+      clickNodeData:null
     };
   },
   computed: {
@@ -64,15 +68,50 @@ export default {
       return nodeIcoClass;
     }
   },
+  created(){
+    this.$bus.$on('flowJsonData',data=>{
+      const json = JSON.parse(data)
+      console.log('===============flowJsonData================',json)
+      const node = this.clickNodeData
+      if(node){
+        this.polling(json.lineList,node.id)
+      }
+      console.log('chain',this.chain)
+    })
+  },
   methods: {
+    polling(list,target){
+      let mark = 0
+      list.map(e=>{
+        if(e.to===target){
+          mark++
+          this.chain.push(e)
+          return this.polling(list,e.from)
+        }
+      })
+      if(mark===0){
+        return false
+      }
+    },
     // 删除节点
     deleteNode() {
       this.$emit("deleteNode", this.node.id);
     },
     // 点击节点
     clickNode() {
+      this.clickNodeData = JSON.parse(JSON.stringify(this.node))
       console.log("点击", this.node);
+      if (this.node.type === "end") {
+        this.dialogVisible = true;
+      }
       this.$emit("clickNode", this.node.id);
+    },
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
     },
     // 鼠标移动后抬起
     changeNodePosition() {

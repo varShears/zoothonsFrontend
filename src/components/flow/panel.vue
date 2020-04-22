@@ -44,7 +44,27 @@
       </el-col>
     </el-row>
     <!-- 流程数据详情 -->
-    <flow-info v-if="flowInfoVisible" ref="flowInfo" :data="data"></flow-info>
+    <flow-info v-show="flowInfoVisible" ref="flowInfo" :data="data"></flow-info>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="cancel">
+      <el-form :model="formData">
+        <el-form-item label="eventCode">
+          <el-input v-model="formData.eventCode"></el-input>
+        </el-form-item>
+        <el-form-item label="eventType">
+          <el-input v-model="formData.eventType"></el-input>
+        </el-form-item>
+        <el-form-item label="key">
+          <el-input v-model="formData.key"></el-input>
+        </el-form-item>
+        <el-form-item label="value">
+          <el-input v-model="formData.value"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click.stop="cancel">取 消</el-button>
+        <el-button type="primary" @click.stop="confirm">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -60,8 +80,16 @@ import lodash from "lodash";
 import { getDataA } from "./data_A";
 import { getDataB } from "./data_B";
 import { getDataC } from "./data_C";
+import service from '../../service/service'
 
 export default {
+  props: {
+    // 获取enginecode
+    engineCode: {
+      type: String,
+      default: ""
+    }
+  },
   data() {
     return {
       // jsPlumb 实例
@@ -73,7 +101,9 @@ export default {
       // 是否加载完毕标志位
       loadEasyFlowFinish: false,
       // 数据
-      data: {}
+      data: {},
+      dialogVisible: false,
+      formData:{}
     };
   },
   // 一些基础配置移动该文件中
@@ -91,6 +121,16 @@ export default {
     this.$nextTick(() => {
       // 默认加载流程A的数据、在这里可以根据具体的业务返回符合流程数据格式的数据即可
       this.dataReload(getDataA());
+
+      this.$bus.$on("doSth", d => {
+        this.$bus.$emit("getChartData");
+        this.dialogVisible = true;
+      });
+
+      this.$bus.$on("getChartData", data => {
+        this.flowJsonData = JSON.stringify(this.data, null, 4).toString();
+        this.$bus.$emit("flowJsonData", this.flowJsonData);
+      });
     });
   },
   methods: {
@@ -364,6 +404,19 @@ export default {
         label: "",
         cssClass: "labelClass a b"
       });
+    },
+    confirm() {
+      this.formData.engineCode = this.$route.query.engineCode
+      console.log(this.formData)
+      service.eventUpsert(this.formData).then(res => {
+        if (res.statusCode === 200) {
+          this.$message.success("执行成功");
+          this.dialogVisible = false;
+        }
+      });
+    },
+    cancel() {
+      this.dialogVisible = false;
     }
   }
 };

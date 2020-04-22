@@ -47,7 +47,7 @@ module.exports = {
       // 移除 prefetch 插件，减少首屏加载
       config.plugins.delete('prefetch')
       return {
-        plugins: [new BundleAnalyzerPlugin()]
+        plugins: []
       }
     }
     // 生产环境
@@ -57,7 +57,7 @@ module.exports = {
 
       // 生产环境打包分析体积
       return {
-        plugins: [new BundleAnalyzerPlugin()]
+        plugins: []
       }
     }
   },

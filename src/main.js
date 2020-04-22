@@ -17,6 +17,7 @@ import 'codemirror/lib/codemirror.css'
 
 Vue.use(codemirror)
 Vue.prototype.$jsPlumb = jsPlumb.jsPlumb
+Vue.prototype.$bus = new Vue()
 
 Vue.config.productionTip = false;
 

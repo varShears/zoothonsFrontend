@@ -15,6 +15,8 @@ export default {
   props: {
     data: Object
   },
+  mounted(){
+  },
   data() {
     return {
       dialogVisible: false,

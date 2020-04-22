@@ -5,9 +5,9 @@
         <template slot="title">{{menu.name}}</template>
         <draggable @end="end" @start="move" v-model="menu.children" :options="draggableOptions">
           <div
-            v-for="son in menu.children"
+            v-for="(son,index) in menu.children"
             :type="son.type"
-            :key="son"
+            :key="index"
             class="flow-node-menu"
             :style="son.style"
           >

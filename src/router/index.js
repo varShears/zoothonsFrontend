@@ -24,7 +24,7 @@ const routes = [
     component: regFormPage
   },
   {
-    path: "jsplumb_page",
+    path: "/jsplumb_page",
     name: "jsplumbPage",
     component: jsplumbPage
   }

@@ -7,13 +7,13 @@
     <el-table :data="tableData" border>
       <el-table-column fixed="left" label="info.unit">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.unit"></el-input>
+          <el-input v-model="scope.row.infoUnit"></el-input>
         </template>
       </el-table-column>
       <el-table-column label="info.service">
         <template slot-scope="scope">
           <!-- {{ scope.row.MROAmount }}-->
-          <el-input v-model="scope.row.service"></el-input>
+          <el-input v-model="scope.row.infoService"></el-input>
         </template>
       </el-table-column>
       <el-table-column label="namespace">
@@ -35,11 +35,12 @@
     </el-table>
     <el-button @click="TurnToPre()">上一步</el-button>
 
-    <el-button type="primary" @click="turnToChart()">确认生成</el-button>
+    <el-button type="primary" @click="turnToChart()">确认数据</el-button>
   </div>
 </template>
 
 <script>
+import service from '../service/service'
 export default {
   data() {
     return {
@@ -52,8 +53,8 @@ export default {
     },
     AddListRow() {
       this.tableData.push({
-        unit: "",
-        service: "",
+        infoUnit: "",
+        infoService: "",
         namespace: ""
       });
     },
@@ -61,7 +62,15 @@ export default {
       this.tableData.splice(index, 1);
     },
     turnToChart() {
-      this.$router.push({ name: "jsplumbPage" });
+      this.tableData.forEach(e=>{
+        e.engineCode = this.$route.query.engineCode
+      })
+      console.log(this.tableData)
+      service.infoUnitUpset(this.tableData).then(res=>{
+        if(res.statusCode === 200){
+           this.$router.push({ name: "jsplumbPage" ,query:this.$route.query.engineCode});
+        }
+      })
     }
   }
 };
