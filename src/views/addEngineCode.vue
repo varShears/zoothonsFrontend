@@ -8,7 +8,7 @@
         <el-input v-model="formData.group" placeholder></el-input>
       </el-form-item>
       <el-form-item label="engine.code">
-        <el-input v-model="formData.code" placeholder></el-input>
+        <el-input v-model="formData.engineCode" placeholder></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -19,20 +19,31 @@
 </template>
 
 <script>
+import services from "../service/service";
 export default {
   data() {
     return {
       formData: {
         app: "App",
         group: "",
-        code: ""
+        engineCode: ""
       }
     };
   },
   methods: {
     onSubmit() {
       console.log(this.formData);
-      this.$router.push({ name: "regFormPage" });
+      services.upset(this.formData).then(res => {
+        console.log(res);
+        if (res.statusCode === 200) {
+          console.log("--------------①执行成功----------------");
+          this.$router.push({
+            name: "regFormPage",
+            query: { engineCode: this.formData.engineCode }
+          });
+        }
+      });
+      // this.$router.push({ name: "regFormPage" });
     }
   }
 };
