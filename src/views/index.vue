@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-button type="primary" @click="turnToNext">test1</el-button>
-    <el-button type="primary">test2</el-button>
-    <el-button type="primary">test3</el-button>
-    <el-button type="primary">test4</el-button>
+    <el-button type="primary" @click="turnToNext">分组配置</el-button>
+    <el-button type="primary">信息元配置</el-button>
+    <el-button type="primary">规则配置</el-button>
+    <el-button type="primary">事件配置</el-button>
   </div>
 </template>
 

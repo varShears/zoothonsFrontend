@@ -66,11 +66,11 @@ export default {
         e.engineCode = this.$route.query.engineCode
       })
       console.log(this.tableData)
-      service.infoUnitUpset(this.tableData).then(res=>{
-        if(res.statusCode === 200){
-           this.$router.push({ name: "jsplumbPage" ,query:this.$route.query.engineCode});
-        }
-      })
+      // service.infoUnitUpset(this.tableData).then(res=>{
+      //   if(res.statusCode === 200){
+           this.$router.push({ name: "jsplumbPage" ,query:{engineCode:this.$route.query.engineCode}});
+        // }
+      // })
     }
   }
 };

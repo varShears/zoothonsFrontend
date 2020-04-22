@@ -4,6 +4,7 @@ var dataC = {
     {
       id: 'nodeA',
       name: '流程C-节点A',
+      expression:'',
       type: 'task',
       left: '400px',
       top: '15px',
@@ -13,6 +14,7 @@ var dataC = {
     {
       id: 'nodeB',
       name: '流程C-节点B',
+      expression:'',
       type: 'task',
       left: '400px',
       top: '200px',
@@ -21,7 +23,8 @@ var dataC = {
     },
     {
       id: 'nodeC',
-      name: '流程C-节点C',
+      name: '流程C-事件C',
+      expression:'',
       type: 'end',
       left: '400px',
       top: '378px',

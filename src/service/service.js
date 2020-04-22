@@ -13,25 +13,25 @@ const perfix = "http://localhost:8002/services"
 const services = {
   // /group/upsert
   // 第一页 新建
-  upset() {
-    return service.post(perfix+'/group/upsert')
+  upset(d) {
+    return service.post(perfix+'/group/upsert',d)
   },
   // /services/infoUnit/upsert
   
-  infoUnitUpset() {
-    return service.post(perfix+'/infoUnit/upsert')
+  infoUnitUpset(d) {
+    return service.post(perfix+'/infoUnit/upsert',d)
   },
 
   // /services/rules/upsert
 
-  rulesUpsert(){
-    return service.post(perfix+'/rules/upsert')
+  rulesUpsert(d){
+    return service.post(perfix+'/rules/upsert',d)
   },
 
   ///services/event/upsert
 
-  eventUpsert(){
-    return service.post(perfix+'/event/upsert')
+  eventUpsert(d){
+    return service.post(perfix+'/event/upsert',d)
   }
 
 }

@@ -33,16 +33,16 @@ export default {
   methods: {
     onSubmit() {
       console.log(this.formData);
-      services.upset(this.formData).then(res => {
-        console.log(res);
-        if (res.statusCode === 200) {
-          console.log("--------------①执行成功----------------");
+      // services.upset(this.formData).then(res => {
+      //   console.log(res);
+      //   if (res.statusCode === 200) {
+      //     console.log("--------------①执行成功----------------");
           this.$router.push({
             name: "regFormPage",
             query: { engineCode: this.formData.engineCode }
           });
-        }
-      });
+      //   }
+      // });
       // this.$router.push({ name: "regFormPage" });
     }
   }

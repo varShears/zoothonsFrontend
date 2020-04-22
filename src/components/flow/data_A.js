@@ -3,7 +3,8 @@ var data_A = {
   nodeList: [
     {
       id: 'nodeA',
-      name: '流程A-节点A',
+      name: '规则A',
+      expression:'',
       type: 'task',
       left: '26px',
       top: '161px',
@@ -12,7 +13,8 @@ var data_A = {
     },
     {
       id: 'nodeB',
-      name: '流程A-节点B',
+      name: '规则B',
+      expression:'',
       type: 'task',
       left: '340px',
       top: '161px',
@@ -21,7 +23,8 @@ var data_A = {
     },
     {
       id: 'nodeC',
-      name: '流程A-节点C',
+      name: '事件C',
+      expression:'',
       type: 'end',
       left: '739px',
       top: '161px',

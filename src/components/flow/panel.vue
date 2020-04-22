@@ -5,10 +5,10 @@
       <el-col :span="24">
         <div class="flow-tooltar">
           <el-link type="primary" style="margin-right:20px">{{data.name}}</el-link>
-          <el-button icon="el-icon-document" @click="dataInfo" size="mini">默认流程</el-button>
+          <el-button icon="el-icon-document" @click="dataInfo" size="mini">流程信息</el-button>
           <el-button @click="dataReloadA" icon="el-icon-refresh" size="mini">流程A</el-button>
           <!-- <el-button @click="dataReloadB" icon="el-icon-refresh" size="mini">切换流程B</el-button> -->
-          <el-button @click="dataReloadC" icon="el-icon-refresh" size="mini">流程B</el-button>
+          <!-- <el-button @click="dataReloadC" icon="el-icon-refresh" size="mini">流程B</el-button> -->
           <!-- <el-button @click="changeLabel" icon="el-icon-edit-outline" size="mini">设置线</el-button> -->
         </div>
       </el-col>
@@ -45,7 +45,7 @@
     </el-row>
     <!-- 流程数据详情 -->
     <flow-info v-show="flowInfoVisible" ref="flowInfo" :data="data"></flow-info>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="cancel">
+    <el-dialog title="触发事件" :visible.sync="dialogVisible" width="30%" :before-close="cancel">
       <el-form :model="formData">
         <el-form-item label="eventCode">
           <el-input v-model="formData.eventCode"></el-input>
@@ -408,12 +408,12 @@ export default {
     confirm() {
       this.formData.engineCode = this.$route.query.engineCode
       console.log(this.formData)
-      service.eventUpsert(this.formData).then(res => {
-        if (res.statusCode === 200) {
+      // service.eventUpsert(this.formData).then(res => {
+        // if (res.statusCode === 200) {
           this.$message.success("执行成功");
           this.dialogVisible = false;
-        }
-      });
+        // }
+      // });
     },
     cancel() {
       this.dialogVisible = false;
