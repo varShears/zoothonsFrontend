@@ -45,24 +45,80 @@
     </el-row>
     <!-- 流程数据详情 -->
     <flow-info v-show="flowInfoVisible" ref="flowInfo" :data="data"></flow-info>
-    <el-dialog title="触发事件" :visible.sync="dialogVisible" width="30%" :before-close="cancel">
-      <el-form :model="formData">
-        <el-form-item label="eventCode">
-          <el-input v-model="formData.eventCode"></el-input>
+    <el-dialog title="触发事件" :visible.sync="dialogVisible" width="50%" :before-close="cancel">
+      <el-form :model="formData" label-width="120px" label-position="left" inline>
+        <el-form-item label="id">
+          <el-input v-model="formData.id"></el-input>
         </el-form-item>
-        <el-form-item label="eventType">
-          <el-input v-model="formData.eventType"></el-input>
+        <el-form-item label="事件类型">
+          <el-input v-model="formData.enventType"></el-input>
         </el-form-item>
-        <el-form-item label="key">
-          <el-input v-model="formData.key"></el-input>
+        <el-form-item label="事件别名">
+          <el-input v-model="formData.aliasName"></el-input>
         </el-form-item>
-        <el-form-item label="value">
-          <el-input v-model="formData.value"></el-input>
+        <el-form-item label="事件返回对象">
+          <el-input v-model="formData.returnType"></el-input>
+        </el-form-item>
+        <el-form-item label="参数1">
+          <el-input v-model="formData.params1"></el-input>
+        </el-form-item>
+        <el-form-item label="参数2">
+          <el-input v-model="formData.params2"></el-input>
+        </el-form-item>
+        <el-form-item label="参数3">
+          <el-input v-model="formData.params3"></el-input>
+        </el-form-item>
+        <el-form-item label="参数4">
+          <el-input v-model="formData.params4"></el-input>
+        </el-form-item>
+        <el-form-item label="参数5">
+          <el-input v-model="formData.params5"></el-input>
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="formData.description"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click.stop="cancel">取 消</el-button>
         <el-button type="primary" @click.stop="confirm">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="配置规则" :visible.sync="dialogVisible1" width="50%" :before-close="cancel1">
+      <el-form :model="formData1" label-width="120px" label-position="left" inline>
+        <el-form-item label="id">
+          <el-input v-model="formData1.id"></el-input>
+        </el-form-item>
+        <el-form-item label="事件类型">
+          <el-input v-model="formData1.enventType"></el-input>
+        </el-form-item>
+        <el-form-item label="事件别名">
+          <el-input v-model="formData1.aliasName"></el-input>
+        </el-form-item>
+        <el-form-item label="事件返回对象">
+          <el-input v-model="formData1.returnType"></el-input>
+        </el-form-item>
+        <el-form-item label="参数1">
+          <el-input v-model="formData1.params1"></el-input>
+        </el-form-item>
+        <el-form-item label="参数2">
+          <el-input v-model="formData1.params2"></el-input>
+        </el-form-item>
+        <el-form-item label="参数3">
+          <el-input v-model="formData1.params3"></el-input>
+        </el-form-item>
+        <el-form-item label="参数4">
+          <el-input v-model="formData1.params4"></el-input>
+        </el-form-item>
+        <el-form-item label="参数5">
+          <el-input v-model="formData1.params5"></el-input>
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="formData1.description"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click.stop="cancel1">取 消</el-button>
+        <el-button type="primary" @click.stop="confirm1">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -80,7 +136,7 @@ import lodash from "lodash";
 import { getDataA } from "./data_A";
 import { getDataB } from "./data_B";
 import { getDataC } from "./data_C";
-import service from '../../service/service'
+import service from "../../service/service";
 
 export default {
   props: {
@@ -103,7 +159,9 @@ export default {
       // 数据
       data: {},
       dialogVisible: false,
-      formData:{}
+      dialogVisible1: false,
+      formData: {},
+      formData1: {}
     };
   },
   // 一些基础配置移动该文件中
@@ -127,7 +185,17 @@ export default {
         this.dialogVisible = true;
       });
 
+      this.$bus.$on("doSth1", d => {
+        this.$bus.$emit("getChartData1");
+        this.dialogVisible1 = true;
+      });
+
       this.$bus.$on("getChartData", data => {
+        this.flowJsonData = JSON.stringify(this.data, null, 4).toString();
+        this.$bus.$emit("flowJsonData", this.flowJsonData);
+      });
+
+      this.$bus.$on("getChartData1", data => {
         this.flowJsonData = JSON.stringify(this.data, null, 4).toString();
         this.$bus.$emit("flowJsonData", this.flowJsonData);
       });
@@ -406,17 +474,30 @@ export default {
       });
     },
     confirm() {
-      this.formData.engineCode = this.$route.query.engineCode
-      console.log(this.formData)
+      this.formData.engineCode = this.$route.query.engineCode;
+      console.log('task',this.formData);
       // service.eventUpsert(this.formData).then(res => {
-        // if (res.statusCode === 200) {
-          this.$message.success("执行成功");
-          this.dialogVisible = false;
-        // }
+      // if (res.statusCode === 200) {
+      this.$message.success("执行成功");
+      this.dialogVisible = false;
+      // }
       // });
     },
     cancel() {
       this.dialogVisible = false;
+    },
+    confirm1() {
+      this.formData1.engineCode = this.$route.query.engineCode;
+      console.log('end',this.formData1);
+      // service.eventUpsert(this.formData).then(res => {
+      // if (res.statusCode === 200) {
+      this.$message.success("执行成功");
+      this.dialogVisible1 = false;
+      // }
+      // });
+    },
+    cancel1() {
+      this.dialogVisible1 = false;
     }
   }
 };

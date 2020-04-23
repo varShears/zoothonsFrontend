@@ -3,9 +3,9 @@ var data_A = {
   nodeList: [
     {
       id: 'nodeA',
-      name: '规则A',
+      name: '节点A',
       expression:'',
-      type: 'task',
+      type: 'rule',
       left: '26px',
       top: '161px',
       ico: 'el-icon-thumb',
@@ -18,7 +18,7 @@ var data_A = {
       type: 'task',
       left: '340px',
       top: '161px',
-      ico: 'el-icon-thumb',
+      ico: 'el-icon-data-analysis',
       show: true
     },
     {

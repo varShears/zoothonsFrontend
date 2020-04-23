@@ -56,20 +56,20 @@ export default {
           children: [
             {
               id: "11",
-              type: "task",
-              name: "流程判断",
+              type: "rule",
+              name: "流程节点",
               ico: "el-icon-thumb",
               // 自定义覆盖样式
               style: {}
-            }
-          ]
-        },
-        {
-          id: "2",
-          type: "group",
-          name: "事件节点",
-          ico: "el-icon-video-pause",
-          children: [
+            },
+            {
+              id: "12",
+              type: "task",
+              name: "规则",
+              ico: "el-icon-data-analysis",
+              // 自定义覆盖样式
+              style: {}
+            },
             {
               id: "21",
               type: "end",
@@ -78,6 +78,14 @@ export default {
               // 自定义覆盖样式
               style: {}
             }
+          ]
+        },
+        {
+          id: "2",
+          type: "group",
+          name: "事件",
+          ico: "el-icon-video-pause",
+          children: [
           ]
         }
       ],
